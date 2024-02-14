@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\Api\v1\BookController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::apiResource('v1/books', BookController::class)
+    ->only(['index', 'show', 'destroy'])
+    ->middleware('auth:sanctum');
+
+Route::post('login', [LoginController::class, 'login']);
